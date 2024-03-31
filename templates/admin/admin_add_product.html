@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <title>Air Well</title>
+    <style>
+        .upload__box {
+            padding: 40px;
+        }
+
+        .upload__inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .upload__btn {
+            display: inline-block;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            min-width: 116px;
+            padding: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid;
+            background-color: #4045ba;
+            border-color: #4045ba;
+            border-radius: 10px;
+            line-height: 26px;
+            font-size: 14px;
+
+            &:hover {
+                background-color: unset;
+                color: #4045ba;
+                transition: all 0.3s ease;
+            }
+
+            &-box {
+                margin-bottom: 10px;
+            }
+        }
+
+        .upload__img-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+        .upload__img-box {
+            width: 100px;
+            height: 100px;
+            padding: 0 10px;
+            margin-bottom: 12px;
+        }
+
+        .upload__img-close {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            text-align: center;
+            line-height: 24px;
+            z-index: 1;
+            cursor: pointer;
+            color: white;
+
+            &:after {
+                content: "\2716";
+                font-size: 14px;
+            }
+        }
+
+        .img-bg {
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        :root {
+            --main-bg-color: #9d006959;
+            --main-text-color: #9d0015cb;
+            --second-text-color: #bbbdc5;
+            --second-bg-color: #edc1ef;
+        }
+
+        .primary-text {
+            color: var(--main-text-color);
+        }
+
+        .second-text {
+            color: var(--second-text-color);
+        }
+
+        .primary-bg {
+            background-color: var(--main-bg-color);
+        }
+
+        .secondary-bg {
+            background-color: var(--second-bg-color);
+        }
+
+        .rounded-full {
+            border-radius: 100%;
+        }
+
+        #wrapper {
+            overflow-x: hidden;
+            background-image: linear-gradient(to right,
+                    #abd0f3b2,
+                    rgba(214, 132, 203, 0.637),
+                    #dccbf7a8,
+                    #f1d4f8,
+                    #fadde2);
+        }
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            margin-left: -15rem;
+            -webkit-transition: margin 0.25s ease-out;
+            -moz-transition: margin 0.25s ease-out;
+            -o-transition: margin 0.25s ease-out;
+            transition: margin 0.25s ease-out;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+        }
+
+        #sidebar-wrapper .list-group {
+            width: 15rem;
+        }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        #menu-toggle {
+            cursor: pointer;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 20px 30px;
+        }
+
+        .list-group-item.active {
+            background-color: transparent;
+            color: var(--main-text-color);
+            font-weight: bold;
+            border: none;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
+                Air Well
+            </div>
+            <div class="list-group list-group-flush my-3">
+                <a href="" class="list-group-item list-group-item-action bg-transparent second-text active"><span
+                        class="material-icons me-2"> dashboard </span>Dashboard</a>
+                <a href="{% url 'admin_enquiry' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><span
+                        class="material-icons me-2"> person </span> Enquiry</a>
+                <a href="" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><span
+                        class="material-icons me-2"> favorite </span>Product</a>
+
+                <a href="{% url 'admin_category' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2"> category </span>
+                    Categories</a>
+                <a href="{% url 'admin_poster' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2"> library_books </span>
+                    Add Poster</a>
+                <a href="{% url 'admin_service_video' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><span
+                        class="material-icons me-2"> admin_panel_settings </span>Service video</a>
+
+                <a href="" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><span
+                        class="material-icons me-2"> logout </span>Logout</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0">Dashboard</h2>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4">
+                <form method="POST" class="shadow-sm p-4 m-5" style="border: 1px solid #ccc; border-radius: 10px"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <label for="product_name" class="form-label">Product Name</label>
+                        <input type="text" required class="form-control" name="product_name" id="product_name"
+                            aria-describedby="prodcuthelp" />
+                        <div id="prodcuthelp" class="form-text">
+                            Product name you want
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="product_description" class="form-label">Product Description</label>
+                        <input type="text" required class="form-control" name="product_description" id="product_description"
+                            aria-describedby="product_descriptionhelp" />
+                        <div id="product_descriptionhelp" class="form-text">
+                            Product description you want
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="product_material" class="form-label">Product Material</label>
+                        <input type="text" required class="form-control" name="product_material" id="product_material"
+                            aria-describedby="product_materialhelp" />
+                        <div id="product_materialhelp" class="form-text">
+                            Product Material you want display
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="product_color" class="form-label">Product Color</label>
+                        <input type="text" required class="form-control" name="product_color" id="product_color"
+                            aria-describedby="product_colorhelp" />
+                        <div id="product_colorhelp" class="form-text">
+                            Color of your product
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="product_price" class="form-label">Product Price
+                        </label>
+                        <input type="text" required class="form-control" name="product_price" id="product_price"
+                            aria-describedby="product_priceHelp" />
+                        <div id="product_priceHelp" class="form-text">
+                            Price of your Product
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <select required class="form-select" name="product_category" aria-describedby="product_categoryHelp">
+                            <option selected>Open this select menu</option>
+                            {% for data in category %}
+                            <option value="{{data.category_id}}">
+                                {{data.category_name}}
+                            </option>
+                            {% endfor %}
+                        </select>
+
+                        <div id="product_categoryHelp" class="form-text">
+                            Price of your Product
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="upload__box">
+                            <div class="upload__btn-box">
+                                <label class="upload__btn">
+                                    <p class="m-0">Upload images</p>
+                                    <input required type="file" name="product_images" id="product_images" multiple
+                                        data-max_length="20" class="upload__inputfile" />
+                                </label>
+                            </div>
+                            <div class="upload__img-wrap rounded-5 m-3 shadow-sm"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {% if status == 'invalid' %}
+                    <p class="text-danger fs-5">Product name already exist</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
+
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>
+
+    <script>
+        jQuery(document).ready(function () {
+            ImgUpload();
+        });
+
+        function ImgUpload() {
+            var imgWrap = "";
+            var imgArray = [];
+
+            $(".upload__inputfile").on("change", function (e) {
+                imgWrap = $(this).closest(".upload__box").find(".upload__img-wrap");
+                var maxLength = $(this).attr("data-max_length");
+
+                var files = e.target.files;
+                var filesArr = Array.prototype.slice.call(files);
+
+                filesArr.forEach(function (f, index) {
+                    if (!f.type.match("image.*")) {
+                        return;
+                    }
+
+                    if (imgArray.length >= maxLength) {
+                        return false;
+                    } else {
+                        imgArray.push(f);
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var html =
+                                "<div class='upload__img-box'><div style='background-image: url(" +
+                                e.target.result +
+                                ")' data-number='" +
+                                $(".upload__img-close").length +
+                                "' data-file='" +
+                                f.name +
+                                "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                            imgWrap.append(html);
+                        };
+                        reader.readAsDataURL(f);
+                    }
+                });
+            });
+
+            $("body").on("click", ".upload__img-close", function (e) {
+                var file = $(this).parent().data("file");
+                imgArray = imgArray.filter(function (item) {
+                    return item.name !== file;
+                });
+                $(this).parent().parent().remove();
+            });
+        }
+    </script>
+</body>
+
+</html>

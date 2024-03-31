@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Air Well</title>
+    <style>
+        :root {
+            --main-bg-color: #9d006959;
+            --main-text-color: #9d0015cb;
+            --second-text-color: #bbbdc5;
+            --second-bg-color: #edc1ef;
+        }
+
+        .primary-text {
+            color: var(--main-text-color);
+        }
+
+        .second-text {
+            color: var(--second-text-color);
+        }
+
+        .primary-bg {
+            background-color: var(--main-bg-color);
+        }
+
+        .secondary-bg {
+            background-color: var(--second-bg-color);
+        }
+
+        .rounded-full {
+            border-radius: 100%;
+        }
+
+        #wrapper {
+            overflow-x: hidden;
+            background-image: linear-gradient(to right,
+                    #abd0f3b2,
+                    rgba(214, 132, 203, 0.637),
+                    #dccbf7a8,
+                    #f1d4f8,
+                    #fadde2);
+        }
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            margin-left: -15rem;
+            -webkit-transition: margin 0.25s ease-out;
+            -moz-transition: margin 0.25s ease-out;
+            -o-transition: margin 0.25s ease-out;
+            transition: margin 0.25s ease-out;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+        }
+
+        #sidebar-wrapper .list-group {
+            width: 15rem;
+        }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        #menu-toggle {
+            cursor: pointer;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 20px 30px;
+        }
+
+        .list-group-item.active {
+            background-color: transparent;
+            color: var(--main-text-color);
+            font-weight: bold;
+            border: none;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
+
+                Air Well</div>
+            <div class="list-group list-group-flush my-3">
+                <a href="{% url 'admin_home' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text active"><span
+                        class="material-icons me-2">
+                        dashboard
+                    </span>Dashboard</a>
+                <a href="{% url 'admin_enquiry' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><span
+                        class="material-icons me-2">
+                        person
+                    </span>
+                    Enquiry</a>
+                <a href="{% url 'admin_products' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><span
+                        class="material-icons me-2">
+                        favorite
+                    </span>Product</a>
+
+                <a href="{% url 'admin_category' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2">
+                        category
+                    </span>
+                    Categories</a>
+                <a href="{% url 'admin_poster' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2">
+                        library_books
+                    </span>
+                    Add Poster</a>
+                <a href="{% url 'admin_service_video' %}"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><span
+                        class="material-icons me-2">
+                        admin_panel_settings
+                    </span>Service video</a>
+
+                <a href="" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><span
+                        class="material-icons me-2">
+                        logout
+                    </span>Logout</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0">Dashboard</h2>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Modal -->
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+                aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this product?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger confirm-remove-btn">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid px-4">
+
+
+                <div class="row my-5">
+
+                    <div class="row g-2">
+                        <div class="col">
+                            <div class="boxed-container p-3 d-flex align-items-center justify-content-between">
+                                <h3 class="fs-4 mb-0">Product Details</h3>
+                                <a class="btn btn-primary" href="{% url 'admin_add_product' %}">Add Product</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="row g-3 mb-3" id="statusForm" method="POST">
+                        <input type="hidden" id="sort_field" name="sort_field" value="">
+                        {% csrf_token %}
+                        <div class="col-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Catagory
+                                </button>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><button type="button" class="dropdown-item btn"
+                                            onclick="sortBy('all')">All</button></li>
+                                    {% for data in categories %}
+                                    <li><button type="button" class="dropdown-item btn"
+                                            onclick="sortBy({{data.category_id}})">{{data.category_name}}</button></li>
+                                    {% endfor %}
+
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+
+
+                    <div class="col ">
+                        <table id="product-table" class="table bg-white rounded shadow-sm  table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="50">#</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Product Description</th>
+                                    <th scope="col">Product Price</th>
+                                    <th scope="col">Product Category </th>
+                                    <th scope="col">Action</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for data in products %}
+                                <tr class="product-row" data-product-id="{{ data.product_id }}"
+                                    data-category="{{ product.product_category.category_name }}">
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{data.product_name}}</td>
+                                    <td>{{data.product_description}}</td>
+                                    <td>{{data.product_price}}</td>
+                                    <td>{{data.product_category.category_name }}</td>
+                                    <td><button class="btn btn-danger btn-sm m-2 remove-btn">Remove</button></td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
+
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>
+
+    <script>
+        function sortBy(sortType) {
+            document.getElementById('sort_field').value = sortType;
+            document.getElementById('statusForm').submit()
+        };
+    </script>
+
+    <script>
+        // Add an event listener to the "Remove" buttons
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.closest('.product-row').getAttribute('data-product-id');
+                if (confirm("Are you sure you want to delete this product?")) {
+                    // Send an AJAX request to delete the product
+                    fetch(`/delete-product/${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}', // Ensure CSRF token is included
+                            'Content-Type': 'application/json' // Specify JSON content type
+                        }
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                // Remove the corresponding row from the table
+                                this.closest('.product-row').remove();
+                            } else {
+                                console.error('Failed to delete product');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

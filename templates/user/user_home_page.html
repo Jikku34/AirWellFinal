@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- Load static files like CSS and JavaScript -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Airwell | product-page</title>
+    <!-- Title of the webpage -->
+    <meta content="" name="description" />
+    <!-- Description meta tag -->
+    <meta content="" name="keywords" />
+    <!-- Keywords meta tag -->
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon" />
+    <!-- Favicon image -->
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon" />
+    <!-- Apple touch icon -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet" />
+    <!-- AOS CSS for animations -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet" />
+    <!-- Boxicons CSS -->
+    <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet" />
+    <!-- Lightbox CSS -->
+    <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet" />
+    <!-- Swiper CSS -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/slick-theme1.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/responsive1.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/slick1.css' %}" />
+    <link href="{% static 'css/style3.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- ======= Top Bar ======= -->
+
+    <section id="topbar" class="d-flex align-items-center">
+        <div class="container-fluid d-flex justify-content-center justify-content-md-between">
+            <!-- Contact Information -->
+            <div class="contact-info d-flex align-items-center">
+                <ul>
+                    <!-- Email -->
+                    <li>
+                        <a href="mailto:haseenamoideen215@gmail.com"><i
+                                class="fas fa-envelope"></i>haseenamoideen215@gmail.com</a>
+                    </li>
+                    <!-- Phone -->
+                    <li>
+                        <a href="tel:+917907013081"><i class="fas fa-phone-alt"></i>+917907013081</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Social Links -->
+            <div class="social-links d-none d-md-flex align-items-center">
+                <a href="https://www.facebook.com/airwellmosquitonetfittings215?mibextid=2JQ9oc" target="_blank"
+                    class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.facebook.com/airwellmosquitonetfittings215?mibextid=2JQ9oc" target="_blank"
+                    class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/airwellmosquitonetfittings215?igsh=MXNraWxyOWFrdjR3bQ=="
+                    target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.facebook.com/airwellmosquitonetfittings215?mibextid=2JQ9oc" target="_blank"
+                    class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======= Header ======= -->
+
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+            <!-- Navbar -->
+            <nav id="navbar" class="navbar">
+                <a class="navbar-brand" href="{% url 'user_home' %}">AIRWELL MOSQUITO NET FITTINGS</a>
+                <!-- Navigation Links -->
+                <ul class="justify-content-end">
+                    <li><a class="nav-link scrollto" href="{% url 'user_home' %}">Home</a></li>
+                    <!-- Dropdown for Products -->
+                    <li class="dropdown">
+                        <a href="{% url 'user_product' %}">Products </a>
+
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="{% url 'user_about' %}">About</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto" href="{% url 'contact_user' %}">Contact</a>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- .navbar -->
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Carousel Section -->
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+            <!-- Carousel Indicators -->
+            {% for banner_item in banner_data %}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
+                {% if forloop.first %} class="active" {% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            <!-- Carousel Images -->
+            {% for banner_item in banner_data %}
+            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                <img src="{{ banner_item.banner_image.url }}" class="d-block w-100" alt="..." />
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- End Carousel Section -->
+
+    <!-- Product Listing Section -->
+    <section class="product-listing-slider">
+        <div class="conatiner-fluid">
+            <h1>Our Products</h1>
+            <div class="product-list-slider">
+                <!-- Loop through products -->
+                {% for product in products %}
+                <a href="/product/{{ product.product_id }}">
+                    <div class="product-list-slider-padd">
+                        <div class="product-list-slider-padd-cntn">
+                            <div class="product-list-slider-padd-cntn-img">
+                                <!-- Product Image -->
+                                {% if product.productimagemodel_set.exists %}
+                                <img src="{{ product.productimagemodel_set.first.product_image.url }}"
+                                    alt="{{ product.product_name }}" />
+                                {% else %}
+                                <img src="{% static 'img/prdct-4.jpg' %}" alt="{{ product.product_name }}" />
+                                {% endif %}
+                            </div>
+                            <div class="product-list-slider-padd-cntn-name">
+                                <!-- Product Name -->
+                                <span class="truncate">{{ product.product_name }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- End Product Listing Section -->
+
+    <!-- Our Service Section -->
+    <section class="our-service-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <!-- Service Video -->
+                    <div class="serive-sectn-video-bx">
+                        {% if  video.video.url %}
+                        <video controls>
+                            <source src="{{ video.video.url }}" type="video/mp4" />
+                        </video>
+                        {%  else %}
+                        <p>No available</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <!-- Service Description -->
+                    <div class="servise-section-text-bx">
+                        <div>
+                            <h3>Our Services</h3>
+                            <p>
+                                Transform your living spaces into sanctuaries of tranquility
+                                with Airwell Mosquito Net Fittings from Airwell Mosquito Net
+                                Fittings. Engineered for seamless integration and lasting
+                                durability, our fittings provide unmatched protection against
+                                mosquitoes while ensuring optimal airflow. Experience peace of
+                                mind knowing that your home is shielded from pesky insects
+                                without compromising on comfort. Choose quality, choose
+                                comfort - choose Airwell Mosquito Net Fittings today.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Our Service Section -->
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Contact Information -->
+                    <div class="contact-section-text-cntnt">
+                        <div>
+                            <h3>Contact Us</h3>
+                            <p>
+                                Airwell mosquito net fittings Kannur, Near by iritty amala
+                                hospital (office) Calicut, balussery(office) Malappuram
+                                Wayanad Kasargode
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Google Maps Embed -->
+                    <div class="contact-sectn-map-bx">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.9249452723598!2d75.66772637413882!3d11.979695235850071!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba435d188fff5a3%3A0x158895504f4a312!2sMosquito%20net%20Fitting%20AIRWELL!5e0!3m2!1sen!2sin!4v1708313601453!5m2!1sen!2sin"
+                            style="border: 0" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Contact Section -->
+
+    <!-- ======= Footer ======= -->
+
+    <footer id="footer">
+        <!-- Footer Content -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <!-- Useful Links -->
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li>
+                                <i class="bx bx-chevron-right"></i> <a href="{% url 'user_home' %}">Home</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i> <a href="{% url 'user_product' %}">Product</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i>
+                                <a href="{% url 'user_about' %}">About</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i>
+                                <a href="{% url 'contact_user' %}">Contact</a>
+                            </li>
+                            <li>
+                                <i class="bx bx-chevron-right"></i> <a href="#">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <!-- Social Networks -->
+                        <h4>Our Social Networks</h4>
+                        <div class="social-links mt-3">
+                            <!-- Links to social media profiles -->
+                            <a href="mailto:haseenamoideen215@gmail.com" class="twitter" target="_blank"><i
+                                    class="bx bx-envelope"></i></a><span> Airwell</span><br /><br />
+                            <a href="https://www.facebook.com/airwellmosquitonetfittings215?mibextid=2JQ9oc"
+                                target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a><span>
+                                Facebook</span><br /><br />
+                            <a href="https://www.instagram.com/airwellmosquitonetfittings215?igsh=MXNraWxyOWFrdjR3bQ=="
+                                target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a><span>
+                                AirWell</span><br /><br />
+                            <a href="https://wa.me/+917907013081" target="_blank" class="google-plus"><i class="bx bx-phone-call"></i></a><span>
+                                +917907013081</span><br /><br />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6 footer-links">
+                        <!-- Contact Form -->
+                        <form method="post" role="form" class="php-email-form" id="myForm">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                        placeholder="Your Name" required />
+                                </div>
+                                <div class="col form-group">
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Your Email" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" id="subject"
+                                    placeholder="Subject" required />
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="5" placeholder="Message"
+                                    required></textarea>
+                            </div>
+                            <div class="my-3">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div hidden id="message">
+                                    <p class="text-info fs-5">Your message has been sent. Thank you!</p>
+                                </div>
+                            </div>
+                            <div class="text-center btn btn-outline">
+                                <button type="submit" class="btn" id="submitForm">
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright Information -->
+        <div class="copy-rght-sectin">
+            <div class="container">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>BizLand</span></strong>. All Rights Reserved
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'vendor/aos/aos.js'   %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/ef28b1feab.js" crossorigin="anonymous"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Custom Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/slick.min.js' %}"></script>
+    <script src="{% static 'js/coutome.js' %}"></script>
+
+    <script>
+        // AJAX Form Submission
+        $(document).ready(function () {
+            $("#myForm").submit(function (e) {
+                e.preventDefault(); // Prevent the default form submission
+                var formData = $(this).serialize(); // Serialize form data
+                $.ajax({
+                    url: "{% url 'user_contact' %}", // Replace 'user_contact' with the URL of your Django view
+                    type: "POST",
+                    data: formData,
+                    success: function (response) {
+                        $("#message").removeAttr("hidden");
+                        $("#myForm")[0].reset(); // Reset form
+                    },
+                    error: function (xhr, status, error) {
+                        $("#message").attr("hidden", true);
+                        console.error(xhr.responseText); // Log error message
+                        $(".error-message").html(
+                            "An error occurred. Please try again later."
+                        ); // Show error message
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
