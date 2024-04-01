@@ -398,7 +398,6 @@ def user_contact(request):
         subject = request.POST.get('subject')
         message = request.POST.get('message')
 
-
         user_enquiry_obj = UserEnquiryModel()
         user_enquiry_obj.enquiry_user = name
         user_enquiry_obj.enquiry_phone = email
@@ -410,3 +409,7 @@ def user_contact(request):
 
     else:
         return JsonResponse({"success": False, "error": "Invalid request method"})
+
+
+def user_privacy_policy(request):
+    return render(request, 'user/user_privacy_policy.html')

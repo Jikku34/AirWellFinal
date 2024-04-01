@@ -72,4 +72,8 @@ urlpatterns = [
 
     # User Contact Form Submission
     path('user_contact', views.user_contact, name='user_contact'),
+
+    # Privacy and Policy
+    path('privacy/', views.user_privacy_policy, name='privacy_policy'),
+
 ]
