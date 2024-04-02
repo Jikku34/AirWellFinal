@@ -51,6 +51,8 @@ urlpatterns = [
 
     # Admin Login
     path('login', views.admin_login),
+    # Admin Logout
+    path('logout', views.admin_logout, name='admin_logout'),
 
 
     # User Section URLs

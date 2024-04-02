@@ -34,6 +34,13 @@
     <link rel="stylesheet" href="{% static 'css/responsive1.css' %}">
     <link rel="stylesheet" href="{% static 'css/slick1.css' %}">
     <link href="{% static 'css/style2.css' %}" rel="stylesheet">
+    <style>
+
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -102,7 +109,7 @@
                 <div class="col-md-7">
                     <div class="product-photo-section">
                         <div class="product-full-size-img" id="large-image-container">
-                            <img id="large-image" src="" alt="">
+                            <img id="large-image" class="thumbnail123" src="" alt="">
                         </div>
                         <div class="product-sub-img-bx thumbnail-container">
                             <!-- Loop through product images -->
@@ -154,7 +161,7 @@
                         </div>
                         <p>{{ product.product_description }}</p>
                         <!-- Button to contact for purchase -->
-                        <a href="tel:+1234567890" class="product-prchs-btn">Contact Now</a>
+                        <a href="https://wa.me/+917907013081" class="product-prchs-btn">Contact Now</a>
                     </div>
                 </div>
             </div>
@@ -308,6 +315,29 @@
             });
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function(){
+            $('.thumbnail123').click(function(){
+                var imgSrc = $(this).attr('src');
+                $('#fullImage').attr('src', imgSrc);
+                $('#imageModal').modal('show');
+            });
+        });
+    </script>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="" id="fullImage" class="img-fluid" alt="Full Image">
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

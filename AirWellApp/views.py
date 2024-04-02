@@ -1,7 +1,7 @@
 from django.db.models import Q, Count
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import JsonResponse
@@ -36,6 +36,23 @@ def admin_login(request):
             return HttpResponse('Incorrect username or password')
 
     return render(request, 'admin/admin_login.html')
+
+
+@login_required(login_url='/login')
+def admin_logout(request):
+    """
+    View for admin logout.
+    This view logs out the currently authenticated admin user.
+    After logging out, it redirects the user to a specified URL, such as the login page.
+    """
+    try:
+        logout(request)
+        return redirect('/login')
+    except:
+
+        return redirect('/login')
+
+
 
 
 @login_required(login_url='/login')
@@ -357,8 +374,8 @@ def product_view(request, id):
     """
     categories_with_products = ProductCategoryModel.objects.prefetch_related('productmodel_set').all()
     product_data = ProductModel.objects.prefetch_related('productimagemodel_set').get(product_id=id)
-    context= {'product': product_data}
-    return render(request, 'user/product_view.html',context)
+    context = {'product': product_data}
+    return render(request, 'user/product_view.html', context)
 
 
 def user_about_page(request):
