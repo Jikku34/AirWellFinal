@@ -370,7 +370,7 @@
                 e.preventDefault(); // Prevent the default form submission
                 var formData = $(this).serialize(); // Serialize form data
                 $.ajax({
-                    url: "{% url 'user_contact' %}", // Replace 'user_contact' with the URL of your Django view
+                    url: "http://13.236.86.253/user_contact", // Replace 'user_contact' with the URL of your Django view
                     type: "POST",
                     data: formData,
                     success: function (response) {
