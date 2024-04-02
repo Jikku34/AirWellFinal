@@ -356,8 +356,8 @@ def product_view(request, id):
     - Renders the 'product_view.html' template with the fetched product and all product categories.
     """
     categories_with_products = ProductCategoryModel.objects.prefetch_related('productmodel_set').all()
-    product = ProductModel.objects.prefetch_related('productimagemodel_set').get(product_id=id)
-    context= {'product': product}
+    product_data = ProductModel.objects.prefetch_related('productimagemodel_set').get(product_id=id)
+    context= {'product': product_data}
     return render(request, 'user/product_view.html',context)
 
 
