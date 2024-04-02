@@ -357,7 +357,8 @@ def product_view(request, id):
     """
     categories_with_products = ProductCategoryModel.objects.prefetch_related('productmodel_set').all()
     product = ProductModel.objects.prefetch_related('productimagemodel_set').get(product_id=id)
-    return render(request, 'user/product_view.html',{'product': product, 'categories_with_products': categories_with_products})
+    context= {'product': product}
+    return render(request, 'user/product_view.html',context)
 
 
 def user_about_page(request):
