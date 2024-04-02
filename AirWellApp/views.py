@@ -355,10 +355,8 @@ def product_view(request, id):
     - Prefetches related product images for better performance.
     - Renders the 'product_view.html' template with the fetched product and all product categories.
     """
-    categories_with_products = ProductCategoryModel.objects.prefetch_related(
-        'productmodel_set').all()
-    product = ProductModel.objects.prefetch_related(
-        'productimagemodel_set').get(product_id=id)
+    categories_with_products = ProductCategoryModel.objects.prefetch_related('productmodel_set').all()
+    product = ProductModel.objects.prefetch_related('productimagemodel_set').get(product_id=id)
     return render(request, 'user/product_view.html',
                   {'product': product, 'categories_with_products': categories_with_products})
 
