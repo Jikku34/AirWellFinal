@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-l@cf9@er9$1wu1c@we9njk^qu#g3cq$tftz7@cu+4=*%ced$=)
 DEBUG = True
 
 # ALLOWED_HOSTS = ['13.236.86.253','0.0.0.0','airwellmosquito.com']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'https://airwellmosquito.com',]
 
 # Application definition
 
@@ -143,4 +143,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     'https://airwellmosquito.com',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://airwellmosquito.com',
+    # Add any other trusted origins as needed
 ]
