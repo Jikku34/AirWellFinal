@@ -123,3 +123,42 @@ class ServiceVideo(models.Model):
     """
     video_id = models.AutoField(primary_key=True)
     video = models.FileField(upload_to='videos/', null=True)
+
+class ProductReview(models.Model):
+    """
+    Model representing customer reviews for products.
+    
+    Fields:
+        product (ForeignKey): The product that the review is for.
+        user (ForeignKey): The user who wrote the review.
+        rating (IntegerField): Star rating of the review (1-5).
+        comment (TextField): The text content of the review.
+        created_at (DateTimeField): The date the review was created.
+    """
+    product = models.ForeignKey('ProductModel', on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
+    user = models.CharField(max_length=200)  # Rating between 1 and 5
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.user} for {self.product.product_name}"
+
+
+
+
+class YouTubeVideo(models.Model):
+    """
+    Model to store YouTube video data for embedding.
+    
+    Fields:
+        title (CharField): Title of the video.
+        video_url (URLField): The YouTube video embed URL.
+        description (TextField): Short description of the video (optional).
+        created_at (DateTimeField): The date and time when the video was added.
+    """
+
+    video_url = models.URLField(help_text="Enter the YouTube embed URL, e.g., https://www.youtube.com/embed/VIDEO_ID")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+

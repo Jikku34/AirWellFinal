@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +42,95 @@
             height: auto;
         }
     </style>
+    <style>
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .star-rating {
+            color: #f8ce0b;
+        }
+
+        .write-review-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .review-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+    </style>
+    <style>
+        .product-images img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .thumbnail img {
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+        }
+
+        .price {
+            color: #ff4e4e;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .stock {
+            color: green;
+            font-weight: bold;
+        }
+        .star-rating {
+    direction: rtl;
+    display: inline-flex;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 24px;
+    color: lightgray;
+    cursor: pointer;
+}
+
+.star-rating input:checked ~ label {
+    color: gold;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: gold;
+}
+
+    </style>
+    
 </head>
 
 <body>
@@ -105,6 +195,19 @@
         <!-- Container for product details -->
         <div class="container">
             <div class="row">
+                {% comment %} <div class="col-md-6">
+                    <div class="product-images mb-3">
+                        <img id="mainImage" src="{{product.productimagemodel_set.all.first.product_image.url}}" alt="Product Image">
+                    </div>
+                    <div class="row">
+                        {% for image in product.productimagemodel_set.all %}
+                        <div class="col-3 thumbnail2">
+                            <img src="{{ image.product_image.url }}" alt="Product Image 1" onclick="changeImage(this)">
+                        </div>
+                        {% endfor %}
+                        
+                    </div>
+                </div> {% endcomment %}
                 <!-- Product Images -->
                 <div class="col-md-7">
                     <div class="product-photo-section">
@@ -114,15 +217,35 @@
                         <div class="product-sub-img-bx thumbnail-container">
                             <!-- Loop through product images -->
                             {% for image in product.productimagemodel_set.all %}
-                            <div class="sub-img">
-                                <img class="thumbnail" src="{{ image.product_image.url }}" alt="">
+                            <div class="sub-img  ">
+                                <img class="thumbnail"  src="{{ image.product_image.url }}" alt="">
                             </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-                <!-- Product Information -->
-                <div class="col-md-5">
+                <!-- Product Information --><div class="col-md-5 ">
+            <h2>{{ product.product_name }}</h2>
+            
+            <div class="mb-3">
+                
+                <span class="price">₹ {{ product.product_price }}/sq ft</span>
+            </div>
+            <p><strong>Availability:</strong> <span class="stock">in stock</span></p>
+            <ul>
+                <li>Material - {{ product.product_material }}</li>
+                <li>Color - {{ product.product_color }} </li>
+                <li>Category - {{ product.product_category.category_name }}</li>
+                
+            </ul>
+            <p class="my-3">{{ product.product_description }}</p>
+
+
+            <a href="https://wa.me/+917907013081" target="_blank" class="product-prchs-btn">Contact Now</a>
+        </div>
+    </div>
+
+                {% comment %} <div class="col-md-5">
                     <div class="product-pricing-sction">
                         <div class="product-name">
                             <span>{{ product.product_name }}</span>
@@ -163,11 +286,97 @@
                         <!-- Button to contact for purchase -->
                         <a href="https://wa.me/+917907013081" target="_blank" class="product-prchs-btn">Contact Now</a>
                     </div>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </section>
-    <!-- End Product Detail Section -->
+
+     <!-- Product Reviews Section -->
+     <div class="container my-5">
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <h4 class="mb-4">Customer Reviews</h4>
+            
+            <div class="review-header mb-4">
+                <div>
+                    <h5>{{ average_rating }} <span class="text-warning">
+                        {% for i in "★★★★★" %}
+                        {% if forloop.counter <= average_rating %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                    </span> ({{ review_count }}  reviews)</h5>
+                </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                    Rate/Review This Product
+                </button>
+            </div>
+            <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reviewModalLabel">Submit Review</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="rating" class="form-label">Rating</label>
+                                    <div class="star-rating">
+                                        <!-- Input for rating with stars -->
+                                        <input type="radio" name="rating" value="5" id="5" required><label for="5">★</label>
+                                        <input type="radio" name="rating" value="4" id="4"><label for="4">★</label>
+                                        <input type="radio" name="rating" value="3" id="3"><label for="3">★</label>
+                                        <input type="radio" name="rating" value="2" id="2"><label for="2">★</label>
+                                        <input type="radio" name="rating" value="1" id="1"><label for="1">★</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="User" class="form-label">Your Name</label>
+                                    <input name="name" class="form-control" id="user" rows="3" placeholder="Type Your Name Here" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label">Comment</label>
+                                    <textarea name="comment" class="form-control" id="comment" rows="3" placeholder="Type Review Here" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sort By Option -->
+            
+            <!-- Review List -->
+            {% for review in reviews %}
+            <div class="review-item">
+                <h6>{{ review.user }} <span class="text-warning">
+                    {% for i in "★★★★★" %}
+                        {% if forloop.counter <= average_rating %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                </span></h6>
+                <small class="text-muted">{{ review.created_at|date:"F jS, Y H:i:s A" }}</small>
+                <p>{{ review.comment }}.</p>
+            </div>
+            {% empty %}
+        <p>No reviews yet. Be the first to review!</p>
+        {% endfor %}
+    
+            
+    
+            <!-- Pagination -->
+           
+        </div>
+    </div>
+
 
     <!-- Footer Section -->
     <footer id="footer">
@@ -291,6 +500,11 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/slick.min.js' %}"></script>
     <script src="{% static 'js/coutome.js' %}"></script>
+    <script>
+        function changeImage(element) {
+            document.getElementById('mainImage').src = element.src;
+        }
+    </script>
 
     <!-- AJAX Form Submission Script -->
     <script>

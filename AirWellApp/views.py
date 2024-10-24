@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
-
+from django.db.models import Avg
 from .models import *
 import re
 
@@ -325,12 +325,14 @@ def user_home_page(request):
     - Renders the 'user_home_page.html' template with fetched data.
     """
     products = ProductModel.objects.all()
+    videos = YouTubeVideo.objects.all().order_by('-created_at')  # Fetch all videos, ordered by newest
+
     video = ServiceVideo.objects.get(video_id=1)
     banner = BannerModel.objects.filter(banner_status="Active")
 
     return render(request, 'user/user_home_page.html',
                   {'products': products, 'video': video,
-                   'banner_data': banner})
+                   'banner_data': banner,'youtube_videos':videos})
 
 
 def user_product(request):
@@ -367,14 +369,45 @@ def user_product(request):
 
 def product_view(request, id):
     """
-    View for displaying details of a specific product.
+    View for displaying details of a specific product and handling review submissions.
     - Fetches the product with the given 'id' from the database.
-    - Prefetches related product images for better performance.
-    - Renders the 'product_view.html' template with the fetched product and all product categories.
+    - Prefetches related product images and reviews.
+    - Allows logged-in users to submit reviews.
+    - Renders the 'product_view.html' template with the fetched product and reviews.
     """
-    categories_with_products = ProductCategoryModel.objects.prefetch_related('productmodel_set').all()
-    product_data = ProductModel.objects.prefetch_related('productimagemodel_set').get(product_id=id)
-    context = {'product': product_data}
+
+    # Fetch product details along with related images
+    product_data = get_object_or_404(ProductModel.objects.prefetch_related('productimagemodel_set'), product_id=id)
+
+    # Handle review submission (POST)
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+        user_name = request.POST.get('name')
+
+        # Create and save the review
+        ProductReview.objects.create(
+            product=product_data,
+            user=user_name,  # Using the entered user name for now (this can be replaced with request.user if authenticated)
+            rating=rating,
+            comment=comment
+        )
+
+        # Redirect to the same product page after submission
+        return redirect('product_view', id=product_data.product_id)
+
+    # Fetch product reviews and calculate average rating
+    reviews = ProductReview.objects.filter(product=product_data).order_by('-created_at')
+    average_rating = reviews.aggregate(avg_rating=Avg('rating'))['avg_rating'] or 0
+
+    context = {
+        'product': product_data,
+        'reviews': reviews,  # Pass the reviews to the template
+        'average_rating': round(average_rating, 1),  # Round average rating to 1 decimal place
+        'review_count': reviews.count()  # Total number of reviews
+    }
+
+    # Render the product detail page with product data, reviews, and average rating
     return render(request, 'user/product_view.html', context)
 
 

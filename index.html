@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Product Card Slider</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+    <style>
+        .new-card {
+            margin: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .new-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .new-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .new-label {
+            background-color: red;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .new-info {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .new-info h5 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .new-info p {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .new-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .new-price .old-price {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+
+        .new-price .new-current-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .new-icons {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .new-icons a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .new-icons a:hover {
+            color: #007bff;
+        }
+
+        .slick-slide {
+            padding: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .new-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container my-4">
+        <div class="new-list-slider">
+            <!-- Product Card 1 -->
+            <div class="new-card">
+                <span class="new-label">HOT</span>
+                <img src="https://via.placeholder.com/350x250" alt="Product Image 1">
+                <div class="new-info">
+                    <span class="text-muted">WOMEN, BAG</span>
+                    <h5>WOMEN LEATHER BAG</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!</p>
+                    <div class="new-price">
+                        <span class="old-price">$95.00</span>
+                        <span class="new-current-price">$230.99</span>
+                    </div>
+                    <div class="new-icons">
+                        <a href="#"><i class="bi bi-heart"></i></a>
+                        <a href="#"><i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="new-card">
+                <span class="new-label">NEW</span>
+                <img src="https://via.placeholder.com/350x250" alt="Product Image 2">
+                <div class="new-info">
+                    <span class="text-muted">MEN, SHOES</span>
+                    <h5>MEN SNEAKERS</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="new-price">
+                        <span class="old-price">$120.00</span>
+                        <span class="new-current-price">$110.99</span>
+                    </div>
+                    <div class="new-icons">
+                        <a href="#"><i class="bi bi-heart"></i></a>
+                        <a href="#"><i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="new-card">
+                <span class="new-label">SALE</span>
+                <img src="https://via.placeholder.com/350x250" alt="Product Image 3">
+                <div class="new-info">
+                    <span class="text-muted">KIDS, TOYS</span>
+                    <h5>KIDS TOY SET</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="new-price">
+                        <span class="old-price">$45.00</span>
+                        <span class="new-current-price">$39.99</span>
+                    </div>
+                    <div class="new-icons">
+                        <a href="#"><i class="bi bi-heart"></i></a>
+                        <a href="#"><i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 4 -->
+            <div class="new-card">
+                <span class="new-label">LIMITED</span>
+                <img src="https://via.placeholder.com/350x250" alt="Product Image 4">
+                <div class="new-info">
+                    <span class="text-muted">WOMEN, SHOES</span>
+                    <h5>WOMEN HIGH HEELS</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="new-price">
+                        <span class="old-price">$150.00</span>
+                        <span class="new-current-price">$120.99</span>
+                    </div>
+                    <div class="new-icons">
+                        <a href="#"><i class="bi bi-heart"></i></a>
+                        <a href="#"><i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 5 -->
+            <div class="new-card">
+                <span class="new-label">POPULAR</span>
+                <img src="https://via.placeholder.com/350x250" alt="Product Image 5">
+                <div class="new-info">
+                    <span class="text-muted">ACCESSORIES</span>
+                    <h5>SMARTWATCH</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="new-price">
+                        <span class="old-price">$199.00</span>
+                        <span class="new-current-price">$179.99</span>
+                    </div>
+                    <div class="new-icons">
+                        <a href="#"><i class="bi bi-heart"></i></a>
+                        <a href="#"><i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 6 -->
+            <div class="new-card">
+                <span class="new-label">BESTSELLER</span>
+                <img src="https://via.placeholder.com/350x250" alt="Product Image 6">
+                <div class="new-info">
+                    <span class="text-muted">ELECTRONICS</span>
+                    <h5>WIRELESS HEADPHONES</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="new-price">
+                        <span class="old-price">$250.00</span>
+                        <span class="new-current-price">$200.99</span>
+                    </div>
+                    <div class="new-icons">
+                        <a href="#"><i class="bi bi-heart"></i></a>
+                        <a href="#"><i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.new-list-slider').slick({
+                autoplay: true,
+                autoplaySpeed: 1500,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: true,
+                pauseOnHover: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67178b924304e3196ad58d5e/1iapviddh';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+</body>
+</html>

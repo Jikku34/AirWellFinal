@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-
+#this is FOR TESTING ONLY
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l@cf9@er9$1wu1c@we9njk^qu#g3cq$tftz7@cu+4=*%ced$=)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['13.236.86.253','0.0.0.0','airwellmosquito.com']
 ALLOWED_HOSTS = ['*', 'https://airwellmosquito.com',]
@@ -74,26 +74,26 @@ WSGI_APPLICATION = 'AirWellFinal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'airwell_db',
-        'USER': 'airwell',
-        'PASSWORD': 'airwell123',
-        'HOST': 'database-2.cfmkymuqmqlu.ap-southeast-2.rds.amazonaws.com',
-        'PORT': '5432'
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-
 }
+
+# DATABASES = {
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'airwell_db',
+#         'USER': 'airwell',
+#         'PASSWORD': 'airwell123',
+#         'HOST': 'database-2.cfmkymuqmqlu.ap-southeast-2.rds.amazonaws.com',
+#         'PORT': '5432'
+
+#     }
+
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -126,12 +126,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATIC_URL = '/static/'
-if DEBUG:
-    STATICFILES_DIRS = [str(BASE_DIR) + '/static']
 
-else:
-    STATIC_ROOT = str(BASE_DIR) + '/static'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# if DEBUG:
+#     STATICFILES_DIRS = [str(BASE_DIR) + '/static']
+
+# else:
+#     STATIC_ROOT = str(BASE_DIR) + '/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = str(BASE_DIR) + '/media'
