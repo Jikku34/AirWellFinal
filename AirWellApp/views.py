@@ -327,7 +327,7 @@ def user_home_page(request):
     products = ProductModel.objects.all()
     videos = YouTubeVideo.objects.all().order_by('-created_at')  # Fetch all videos, ordered by newest
 
-    video = ServiceVideo.objects.get(video_id=1)
+    video = ServiceVideo.objects.get(video_id=2)
     banner = BannerModel.objects.filter(banner_status="Active")
 
     return render(request, 'user/user_home_page.html',
