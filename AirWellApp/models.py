@@ -152,9 +152,7 @@ class YouTubeVideo(models.Model):
     Model to store YouTube video data for embedding.
     
     Fields:
-        title (CharField): Title of the video.
         video_url (URLField): The YouTube video embed URL.
-        description (TextField): Short description of the video (optional).
         created_at (DateTimeField): The date and time when the video was added.
     """
 

@@ -10,7 +10,8 @@ from django.views.decorators.http import require_http_methods
 from django.db.models import Avg
 from .models import *
 import re
-
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
 # Create your views here.
 
@@ -38,19 +39,12 @@ def admin_login(request):
     return render(request, 'admin/admin_login.html')
 
 
+
 @login_required(login_url='/login')
 def admin_logout(request):
-    """
-    View for admin logout.
-    This view logs out the currently authenticated admin user.
-    After logging out, it redirects the user to a specified URL, such as the login page.
-    """
-    try:
-        logout(request)
-        return redirect('/login')
-    except:
+    logout(request)
+    return redirect('/login')
 
-        return redirect('/login')
 
 
 
@@ -132,7 +126,6 @@ def admin_remove_category(request, category_id):
         category = get_object_or_404(ProductCategoryModel, pk=category_id)
         other_category = ProductCategoryModel.objects.get_or_create(category_name="Other")[0]
         products_to_move = ProductModel.objects.filter(product_category=category)
-        print(products_to_move.values())
         for product in products_to_move:
             product.product_category = other_category
             product.save()
@@ -290,11 +283,9 @@ def admin_service_video(request):
     View for managing service videos.
     This view allows admins to update the service video.
     """
-    video = ServiceVideo.objects.get(video_id=1)
+    video = ServiceVideo.objects.first()
 
     if request.method == "POST":
-        video = ServiceVideo()
-        video.video_id = 1
         video.video = request.FILES.get('video')
         video.save()
         return redirect('/admin_service_video')
@@ -316,6 +307,83 @@ def update_enquiry_status(request, enquiry_id):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
+
+
+@login_required(login_url='/login')
+def admin_profile(request):
+    """Render the admin profile page."""
+    return render(request, 'admin/admin_profile.html')  # Ensure this matches your template name and path
+
+@login_required(login_url='/login')
+def update_admin_username(request):
+    """Handle updating the admin's username."""
+    if request.method == 'POST':
+        new_username = request.POST.get('username')
+        current_password = request.POST.get('current_password')
+        
+        user = request.user
+        if user.check_password(current_password):
+            user.username = new_username
+            user.save()
+            messages.success(request, "Username updated successfully!")
+        else:
+            messages.error(request, "Incorrect password. Username not updated.")
+        return redirect('admin_profile')
+    else:
+        return redirect('admin_profile')
+
+@login_required(login_url='/login')
+def update_admin_password(request):
+    """Handle updating the admin's password."""
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        
+        user = request.user
+        if user.check_password(current_password):
+            if new_password == confirm_password:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)  # Keep the user logged in
+                messages.success(request, "Password updated successfully!")
+            else:
+                messages.error(request, "New passwords do not match.")
+        else:
+            messages.error(request, "Incorrect password. Password not updated.")
+        return redirect('admin_profile')
+    else:
+        return redirect('admin_profile')
+@login_required(login_url='/login')
+def youtube_videos(request):
+    """Display all YouTube videos and handle adding new videos."""
+    if request.method == "POST":
+        # Handle adding a new video
+        video_url = request.POST.get("video_url")
+        
+        if video_url:
+            # Check if video already exists
+            if YouTubeVideo.objects.filter(video_url=video_url).exists():
+                messages.error(request, "This video already exists.")
+            else:
+                YouTubeVideo.objects.create(video_url=video_url)
+                messages.success(request, "Video added successfully!")
+        else:
+            messages.error(request, "Please provide a valid video URL.")
+        
+        return redirect("youtube_videos")  # Redirect after adding
+
+    # Get all videos to display
+    videos = YouTubeVideo.objects.all()
+    return render(request, "admin/youtube_videos.html", {"videos": videos})
+@login_required(login_url='/login')
+def delete_video(request, video_id):
+    """Handle deleting a video through a GET request."""
+    video = get_object_or_404(YouTubeVideo, id=video_id)
+    video.delete()
+    messages.success(request, "Video deleted successfully.")
+    return redirect("youtube_videos")
+
 # +++++++++++++++++++++++++++++++++++++++  user section +++++++++++++++++++++++++++++++++++++++++
 def user_home_page(request):
     """
@@ -327,7 +395,7 @@ def user_home_page(request):
     products = ProductModel.objects.all()
     videos = YouTubeVideo.objects.all().order_by('-created_at')  # Fetch all videos, ordered by newest
 
-    video = ServiceVideo.objects.get(video_id=2)
+    video = ServiceVideo.objects.first()
     banner = BannerModel.objects.filter(banner_status="Active")
 
     return render(request, 'user/user_home_page.html',
@@ -347,7 +415,7 @@ def user_product(request):
     categories = ProductCategoryModel.objects.all()
     search = ''
     if request.method == 'POST':
-        search = request.POST.get('search_text')
+        search = request.POST.get('search_text', '').strip()
         if search:
             search = re.sub(r'\s+', ' ', search)
             search_terms = search.split()
@@ -460,3 +528,43 @@ def user_contact(request):
 
 def user_privacy_policy(request):
     return render(request, 'user/user_privacy_policy.html')
+
+
+@login_required(login_url='/login')
+def update_product(request, product_id):
+    # Retrieve the product by ID and its associated images
+    product = get_object_or_404(ProductModel, pk=product_id)
+    images = ProductImageModel.objects.filter(product_id=product)
+    categories = ProductCategoryModel.objects.all()
+
+    if request.method == "POST":
+        # Update product fields directly from request.POST data
+        product.product_name = request.POST.get('product_name')
+        product.product_description = request.POST.get('product_description')
+        product.product_material = request.POST.get('product_material')
+        product.product_color = request.POST.get('product_color')
+        product.product_price = request.POST.get('product_price')
+        product.product_category_id = request.POST.get('product_category')
+        product.save()
+
+        # Handle new image uploads
+        if 'product_images' in request.FILES:
+            for image in request.FILES.getlist('product_images'):
+                ProductImageModel.objects.create(product_id=product, product_image=image)
+
+
+
+        # Handle image deletions based on checkboxes in the form
+        for image in images:
+            if f'delete_image_{image.id}' in request.POST:
+              
+                image.delete()
+
+        # Redirect to the product list or another page after updating
+        return redirect('admin_products')  # Adjust this URL name to your needs
+
+    return render(request, 'admin/admin_update_product.html', {
+        'product': product,
+        'images': images,
+        'category': categories,
+    })

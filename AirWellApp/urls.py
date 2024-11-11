@@ -54,6 +54,15 @@ urlpatterns = [
     # Admin Logout
     path('logout', views.admin_logout, name='admin_logout'),
 
+    path('profile/', views.admin_profile, name='admin_profile'),
+    path('update-username/', views.update_admin_username, name='update_admin_username'),
+    path('update-password/', views.update_admin_password, name='update_admin_password'),
+    path("youtube-videos/", views.youtube_videos, name="youtube_videos"),
+    path("delete-video/<int:video_id>/", views.delete_video, name="delete_video"),
+    
+    path('update-product/<str:product_id>/', views.update_product, name='update_product'),
+
+
 
     # User Section URLs
 

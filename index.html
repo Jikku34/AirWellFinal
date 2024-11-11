@@ -1,269 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Product Card Slider</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <title>Air Well</title>
     <style>
-        .new-card {
-            margin: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Your existing styles */
+        .upload__box {
+            padding: 40px;
+        }
+
+        .upload__inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
             overflow: hidden;
-            transition: transform 0.3s ease-in-out;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .upload__btn {
+            display: inline-block;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            min-width: 116px;
+            padding: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid;
+            background-color: #4045ba;
+            border-color: #4045ba;
+            border-radius: 10px;
+            line-height: 26px;
+            font-size: 14px;
+        }
+
+        .upload__img-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+        .upload__img-box {
+            width: 100px;
+            height: 100px;
+            padding: 0 10px;
+            margin-bottom: 12px;
             position: relative;
         }
 
-        .new-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .new-card img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
-
-        .new-label {
-            background-color: red;
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: bold;
+        .upload__img-close {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
             position: absolute;
             top: 10px;
-            left: 10px;
-            padding: 5px 10px;
-            border-radius: 5px;
+            right: 10px;
+            text-align: center;
+            line-height: 24px;
+            z-index: 1;
+            cursor: pointer;
+            color: white;
         }
 
-        .new-info {
-            padding: 15px;
-            text-align: left;
-        }
-
-        .new-info h5 {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .new-info p {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-bottom: 10px;
-        }
-
-        .new-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .new-price .old-price {
-            text-decoration: line-through;
-            color: #aaa;
-        }
-
-        .new-price .new-current-price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #f39c12;
-        }
-
-        .new-icons {
-            margin-top: 10px;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .new-icons a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        .new-icons a:hover {
-            color: #007bff;
-        }
-
-        .slick-slide {
-            padding: 0 10px;
-        }
-
-        @media (max-width: 768px) {
-            .new-card {
-                max-width: 100%;
-            }
+        .img-bg {
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: relative;
         }
     </style>
 </head>
+
 <body>
-
-    <div class="container my-4">
-        <div class="new-list-slider">
-            <!-- Product Card 1 -->
-            <div class="new-card">
-                <span class="new-label">HOT</span>
-                <img src="https://via.placeholder.com/350x250" alt="Product Image 1">
-                <div class="new-info">
-                    <span class="text-muted">WOMEN, BAG</span>
-                    <h5>WOMEN LEATHER BAG</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!</p>
-                    <div class="new-price">
-                        <span class="old-price">$95.00</span>
-                        <span class="new-current-price">$230.99</span>
-                    </div>
-                    <div class="new-icons">
-                        <a href="#"><i class="bi bi-heart"></i></a>
-                        <a href="#"><i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
+                Air Well
             </div>
-
-            <!-- Product Card 2 -->
-            <div class="new-card">
-                <span class="new-label">NEW</span>
-                <img src="https://via.placeholder.com/350x250" alt="Product Image 2">
-                <div class="new-info">
-                    <span class="text-muted">MEN, SHOES</span>
-                    <h5>MEN SNEAKERS</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="new-price">
-                        <span class="old-price">$120.00</span>
-                        <span class="new-current-price">$110.99</span>
-                    </div>
-                    <div class="new-icons">
-                        <a href="#"><i class="bi bi-heart"></i></a>
-                        <a href="#"><i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
+            <div class="list-group list-group-flush my-3">
+                <a href="{% url 'admin_home' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2">dashboard</span>Dashboard
+                </a>
+                <!-- Additional Sidebar Links as needed -->
             </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
 
-            <!-- Product Card 3 -->
-            <div class="new-card">
-                <span class="new-label">SALE</span>
-                <img src="https://via.placeholder.com/350x250" alt="Product Image 3">
-                <div class="new-info">
-                    <span class="text-muted">KIDS, TOYS</span>
-                    <h5>KIDS TOY SET</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="new-price">
-                        <span class="old-price">$45.00</span>
-                        <span class="new-current-price">$39.99</span>
-                    </div>
-                    <div class="new-icons">
-                        <a href="#"><i class="bi bi-heart"></i></a>
-                        <a href="#"><i class="bi bi-cart"></i></a>
-                    </div>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0">Update Product</h2>
                 </div>
-            </div>
+            </nav>
 
-            <!-- Product Card 4 -->
-            <div class="new-card">
-                <span class="new-label">LIMITED</span>
-                <img src="https://via.placeholder.com/350x250" alt="Product Image 4">
-                <div class="new-info">
-                    <span class="text-muted">WOMEN, SHOES</span>
-                    <h5>WOMEN HIGH HEELS</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="new-price">
-                        <span class="old-price">$150.00</span>
-                        <span class="new-current-price">$120.99</span>
+            <div class="container-fluid px-4">
+                <!-- Update Product Form -->
+                <form method="POST" class="shadow-sm p-4 m-5" style="border: 1px solid #ccc; border-radius: 10px" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <label for="product_name" class="form-label">Product Name</label>
+                        <input type="text" required class="form-control" name="product_name" id="product_name" value="{{ product.product_name }}">
                     </div>
-                    <div class="new-icons">
-                        <a href="#"><i class="bi bi-heart"></i></a>
-                        <a href="#"><i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Product Card 5 -->
-            <div class="new-card">
-                <span class="new-label">POPULAR</span>
-                <img src="https://via.placeholder.com/350x250" alt="Product Image 5">
-                <div class="new-info">
-                    <span class="text-muted">ACCESSORIES</span>
-                    <h5>SMARTWATCH</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="new-price">
-                        <span class="old-price">$199.00</span>
-                        <span class="new-current-price">$179.99</span>
+                    <div class="mb-2">
+                        <label for="product_description" class="form-label">Product Description</label>
+                        <input type="text" required class="form-control" name="product_description" id="product_description" value="{{ product.product_description }}">
                     </div>
-                    <div class="new-icons">
-                        <a href="#"><i class="bi bi-heart"></i></a>
-                        <a href="#"><i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Product Card 6 -->
-            <div class="new-card">
-                <span class="new-label">BESTSELLER</span>
-                <img src="https://via.placeholder.com/350x250" alt="Product Image 6">
-                <div class="new-info">
-                    <span class="text-muted">ELECTRONICS</span>
-                    <h5>WIRELESS HEADPHONES</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="new-price">
-                        <span class="old-price">$250.00</span>
-                        <span class="new-current-price">$200.99</span>
+                    <div class="mb-2">
+                        <label for="product_material" class="form-label">Product Material</label>
+                        <input type="text" required class="form-control" name="product_material" id="product_material" value="{{ product.product_material }}">
                     </div>
-                    <div class="new-icons">
-                        <a href="#"><i class="bi bi-heart"></i></a>
-                        <a href="#"><i class="bi bi-cart"></i></a>
+
+                    <div class="mb-2">
+                        <label for="product_color" class="form-label">Product Color</label>
+                        <input type="text" required class="form-control" name="product_color" id="product_color" value="{{ product.product_color }}">
                     </div>
-                </div>
+
+                    <div class="mb-2">
+                        <label for="product_price" class="form-label">Product Price</label>
+                        <input type="text" required class="form-control" name="product_price" id="product_price" value="{{ product.product_price }}">
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="product_category" class="form-label">Product Category</label>
+                        <select required class="form-select" name="product_category">
+                            <option value="">Select a category</option>
+                            {% for data in category %}
+                            <option value="{{ data.category_id }}" {% if product.product_category_id == data.category_id %}selected{% endif %}>
+                                {{ data.category_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Display existing images with delete checkboxes -->
+                    <div class="mb-3">
+                        <label class="form-label">Existing Images</label>
+                        <div class="upload__img-wrap">
+                            {% for image in images %}
+                            <div class="upload__img-box">
+                                <div style="background-image: url('{{ image.product_image.url }}')" class="img-bg">
+                                    <input type="checkbox" name="delete_image_{{ image.id }}" class="upload__img-close"> Delete
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Upload new images -->
+                    <div class="upload__box mb-3">
+                        <label class="upload__btn">
+                            <p class="m-0">Upload New Images</p>
+                            <input type="file" name="product_images" id="product_images" multiple data-max_length="20" class="upload__inputfile">
+                        </label>
+                        <div class="upload__img-wrap rounded-5 m-3 shadow-sm"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.new-list-slider').slick({
-                autoplay: true,
-                autoplaySpeed: 1500,
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                dots: true,
-                arrows: true,
-                pauseOnHover: true,
-                responsive: [
-                    {
-                        breakpoint: 1024,
-                        settings: {
-                            slidesToShow: 2
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 1
-                        }
-                    }
-                ]
-            });
-        });
-    </script>
-    <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/67178b924304e3196ad58d5e/1iapviddh';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
+        var el = document.getElementById("wrapper");
+        var toggleButton = document.getElementById("menu-toggle");
 
+        toggleButton.onclick = function () {
+            el.classList.toggle("toggled");
+        };
+    </script>
+
+    <script>
+        jQuery(document).ready(function () {
+            ImgUpload();
+        });
+
+        function ImgUpload() {
+            var imgWrap = "";
+            var imgArray = [];
+
+            $(".upload__inputfile").on("change", function (e) {
+                imgWrap = $(this).closest(".upload__box").find(".upload__img-wrap");
+                var maxLength = $(this).attr("data-max_length");
+
+                var files = e.target.files;
+                var filesArr = Array.prototype.slice.call(files);
+
+                filesArr.forEach(function (f, index) {
+                    if (!f.type.match("image.*")) {
+                        return;
+                    }
+
+                    if (imgArray.length >= maxLength) {
+                        return false;
+                    } else {
+                        imgArray.push(f);
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var html = "<div class='upload__img-box'><div style='background-image: url(" +
+                                e.target.result +
+                                ")' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                            imgWrap.append(html);
+                        };
+                        reader.readAsDataURL(f);
+                    }
+                });
+            });
+
+            $("body").on("click", ".upload__img-close", function (e) {
+                var file = $(this).parent().data("file");
+                imgArray = imgArray.filter(function (item) {
+                    return item.name !== file;
+                });
+                $(this).parent().parent().remove();
+            });
+        }
+    </script>
 </body>
+
 </html>

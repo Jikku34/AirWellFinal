@@ -408,25 +408,25 @@
 
     
     <!-- End Product Listing Section -->
+    {% if youtube_videos %}
     <section class="video-gallery mt-2">
         <div class="container">
             <h2 class="gallery-title text-center">Gallery</h2>
             <div class="row">
-                <!-- Video 1 -->
-                 {% for youtube_video in youtube_videos %}
+                {% for youtube_video in youtube_videos %}
                 <div class="col-md-4 mb-4">
                     <div class="card video-card">
                         <div class="embed-responsive">
-                            <iframe width="560" height="315" src="{{youtube_video.video_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            <iframe width="560" height="315" src="{{ youtube_video.video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-
-
             </div>
         </div>
     </section>
+    {% endif %}
+    
 
     <!-- Our Service Section -->
     <section class="our-service-section">
@@ -650,17 +650,19 @@
         });
     </script>
     <!--Start of Tawk.to Script-->
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
-    s1.src='https://embed.tawk.to/67178b924304e3196ad58d5e/1iapviddh';
+    s1.src='https://embed.tawk.to/6731e7ec2480f5b4f59b9b56/1icdf3ttj';
     s1.charset='UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
+    <!--End of Tawk.to Script-->
     <!--End of Tawk.to Script-->
 </body>
 

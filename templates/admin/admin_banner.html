@@ -137,29 +137,27 @@
             </div>
             <!-- Sidebar navigation links -->
             <div class="list-group list-group-flush my-3">
-                <a href="{% url 'admin_home' %}"
-                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="{% url 'admin_home' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <span class="material-icons me-2">dashboard</span>Dashboard
                 </a>
-                <a href="{% url 'admin_enquiry' %}"
-                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="{% url 'admin_enquiry' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <span class="material-icons me-2">person</span>Enquiry
                 </a>
-                <a href="{% url 'admin_products' %}"
-                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="{% url 'admin_products' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <span class="material-icons me-2">favorite</span>Product
                 </a>
                 <a href="{% url 'admin_category' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <span class="material-icons me-2">category</span>Categories
                 </a>
-                <a href="{% url 'admin_poster' %}"
-                    class="list-group-item list-group-item-action bg-transparent second-text active">
-                    <span class="material-icons me-2"> library_books </span>
-                    Add Poster</a>
-                <a href="{% url 'admin_service_video' %}"
-                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                    <span class="material-icons me-2">admin_panel_settings</span>Service
-                    video
+                <a href="{% url 'admin_poster' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2">library_books</span>Add Poster
+                </a>
+                <a href="{% url 'admin_service_video' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2">admin_panel_settings</span>Service Video
+                </a>
+                <!-- New YouTube Page Link -->
+                <a href="{% url 'youtube_videos' %}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <span class="material-icons me-2">play_circle</span>YouTube Videos
                 </a>
                 <a href="{% url 'admin_logout' %}" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
                     <span class="material-icons me-2">logout</span>Logout
@@ -189,8 +187,7 @@
                                 <i class="fas fa-user me-2"></i>Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_profile' %}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin_logout' %}">Logout</a></li>
                             </ul>
                         </li>
